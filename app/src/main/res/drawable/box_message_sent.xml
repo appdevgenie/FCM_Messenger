@@ -6,7 +6,7 @@
 
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:dither="true" android:shape="rectangle">
 
-            <corners android:radius="20dp" android:topRightRadius="0dp" />
+            <corners android:radius="20dp" android:bottomRightRadius="0dp" />
 
             <solid android:color="@color/colorAccent" />
 
@@ -21,7 +21,7 @@
 
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:dither="true" android:shape="rectangle">
 
-            <corners android:radius="20dp" android:topRightRadius="0dp" />
+            <corners android:radius="20dp" android:bottomRightRadius="0dp" />
 
             <solid android:color="@color/colorAccentPressed" />
 

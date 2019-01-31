@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import static com.appdevgenie.fcmmessenger.Utils.Constants.PARSE_UID;
+
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainListViewHolder> {
 
     private Context context;
@@ -74,8 +76,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MainLi
 
         @Override
         public void onClick(View view) {
+            String uid = users.get(getAdapterPosition()).getUid();
 
             Intent intent = new Intent(context, MessengerActivity.class);
+            intent.putExtra(PARSE_UID, uid);
             context.startActivity(intent);
         }
     }
