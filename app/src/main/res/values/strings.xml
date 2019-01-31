@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FCM Messenger</string>
+    <!--<string name="default_web_client_id" translatable="false">com.appdevgenie.fcmmessenger</string>-->
+
+</resources>
