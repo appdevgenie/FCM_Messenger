@@ -10,14 +10,16 @@
 
     <TextView
         android:id="@+id/tvMessageDate"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="4dp"
-        android:gravity="center"
+        android:gravity="left|start"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         tools:text="placeholder"
         android:textColor="@color/colorTextSecondary"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tvMessageBody"
@@ -25,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="2dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="32dp"
         android:layout_marginBottom="2dp"
         android:background="@drawable/box_message_received"
         android:clickable="true"

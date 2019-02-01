@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<User> users;
     private ProgressBar progressBar;
     private Toolbar toolbar;
+    private String currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +72,16 @@ public class MainActivity extends AppCompatActivity {
         mainListAdapter = new MainListAdapter(this, users);
         recyclerView.setAdapter(mainListAdapter);
 
-        getUserListInfo();
+        currentUser = firebaseAuth.getCurrentUser().getUid();
+
+        //getUserListInfo();
     }
 
     private void getUserListInfo() {
 
         progressBar.setVisibility(View.VISIBLE);
+
+        users.clear();
 
         Query query = databaseReference.child(DB_REF_USERS);
 
@@ -88,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
                     if (user != null && user.getDisplayName() != null) {
                         Log.d(TAG, "onDataChange: found a user: " + user.getDisplayName());
-                        users.add(user);
+                        if(!TextUtils.equals(currentUser, user.getUid())) {
+                            users.add(user);
+                        }
                     }
                 }
                 mainListAdapter.notifyDataSetChanged();
@@ -112,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
                 if(firebaseUser != null){
+                    getUserListInfo();
                     //addUserToDB(firebaseUser);
                 }
             }
