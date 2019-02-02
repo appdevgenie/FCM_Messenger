@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getUserListInfo() {
 
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
 
         users.clear();
 
@@ -101,12 +101,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 mainListAdapter.notifyDataSetChanged();
 
-                progressBar.setVisibility(View.INVISIBLE);
+                //progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                progressBar.setVisibility(View.INVISIBLE);
+                //progressBar.setVisibility(View.INVISIBLE);
             }
         });
 

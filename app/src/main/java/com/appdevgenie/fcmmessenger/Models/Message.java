@@ -6,19 +6,15 @@ public class Message {
     private String from;
     private String to;
     private long timestamp;
-    private long negatedTimestamp;
-    private long dayTimestamp;
 
     public Message() {
     }
 
-    public Message(String body, String from, String to, long timestamp, long negatedTimestamp, long dayTimestamp) {
+    public Message(String body, String from, String to, long timestamp) {
         this.body = body;
         this.from = from;
         this.to = to;
         this.timestamp = timestamp;
-        this.negatedTimestamp = negatedTimestamp;
-        this.dayTimestamp = dayTimestamp;
     }
 
     public String getBody() {
@@ -53,22 +49,6 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public long getNegatedTimestamp() {
-        return negatedTimestamp;
-    }
-
-    public void setNegatedTimestamp(long negatedTimestamp) {
-        this.negatedTimestamp = negatedTimestamp;
-    }
-
-    public long getDayTimestamp() {
-        return dayTimestamp;
-    }
-
-    public void setDayTimestamp(long dayTimestamp) {
-        this.dayTimestamp = dayTimestamp;
-    }
-
     @Override
     public String toString() {
         return "Message{" +
@@ -76,8 +56,6 @@ public class Message {
                 ", from='" + from + '\'' +
                 ", to='" + to + '\'' +
                 ", timestamp=" + timestamp +
-                ", negatedTimestamp=" + negatedTimestamp +
-                ", dayTimestamp=" + dayTimestamp +
                 '}';
     }
 }

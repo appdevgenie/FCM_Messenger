@@ -122,11 +122,11 @@ public class MessengerActivity extends AppCompatActivity implements TextWatcher 
 
     private void pushMessageInfo() {
 
-        long timestamp = new Date().getTime();
-        long dayTimestamp = System.currentTimeMillis() + 1000;
+        //long timestamp = new Date().getTime();
+        long timestamp = System.currentTimeMillis() + 1000;
         String messageBody = textInputEditText.getText().toString();
 
-        Message message = new Message(messageBody, senderUserId, receiverUserId, timestamp, -timestamp, dayTimestamp);
+        Message message = new Message(messageBody, senderUserId, receiverUserId, timestamp);
 
         databaseReference
                 .child(DB_REF_MESSAGES)

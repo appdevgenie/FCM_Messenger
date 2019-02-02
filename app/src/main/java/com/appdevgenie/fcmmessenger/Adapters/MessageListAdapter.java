@@ -12,14 +12,12 @@ import com.appdevgenie.fcmmessenger.Models.Message;
 import com.appdevgenie.fcmmessenger.R;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MessageViewHolder> {
 
     private static final int VIEW_TYPE_SENT = 0;
-    private static final int VIEW_TYPE_SENT_WITH_DATE = 1;
-    private static final int VIEW_TYPE_RECEIVED = 2;
-    private static final int VIEW_TYPE_RECEIVED_WITH_DATE = 3;
+    private static final int VIEW_TYPE_RECEIVED = 1;
 
     private Context context;
     private ArrayList<Message> messageArrayList;
@@ -40,15 +38,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
                 view = LayoutInflater.from(context).inflate(R.layout.item_message_sent, parent, false);
                 break;
 
-            case VIEW_TYPE_SENT_WITH_DATE:
-                view = LayoutInflater.from(context).inflate(R.layout.item_message_sent, parent, false);
-                break;
-
             case VIEW_TYPE_RECEIVED:
-                view = LayoutInflater.from(context).inflate(R.layout.item_message_received, parent, false);
-                break;
-
-            case VIEW_TYPE_RECEIVED_WITH_DATE:
                 view = LayoutInflater.from(context).inflate(R.layout.item_message_received, parent, false);
                 break;
 
@@ -76,10 +66,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
         Message message = messageArrayList.get(holder.getAdapterPosition());
 
-        String dateString = DateFormat.format("EEEE dd MMM yyyy  HH:mm", new Date(message.getDayTimestamp())).toString();
+        //String dateString = DateFormat.format("EEEE dd MMM yyyy  HH:mm", new Date(message.getTimestamp())).toString();
 
         holder.tvMessageBody.setText(message.getBody());
-        holder.tvMessageDate.setText(dateString);
+        holder.tvMessageDate.setText(getFormattedDate(message.getTimestamp()));
     }
 
     @Override
@@ -104,5 +94,24 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         }
     }
 
+    private String getFormattedDate(long timestamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
 
+        Calendar now = Calendar.getInstance();
+
+        final String timeFormatString = "HH:mm";
+        final String dateTimeFormatString = "EEEE, MMMM d, HH:mm";
+        //final long HOURS = 60 * 60 * 60;
+
+        if (now.get(Calendar.DATE) == calendar.get(Calendar.DATE)) {
+            return "Today " + DateFormat.format(timeFormatString, calendar);
+        } else if (now.get(Calendar.DATE) - calendar.get(Calendar.DATE) == 1) {
+            return "Yesterday " + DateFormat.format(timeFormatString, calendar);
+        } else if (now.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)) {
+            return DateFormat.format(dateTimeFormatString, calendar).toString();
+        } else {
+            return DateFormat.format("MMMM dd yyyy, HH:mm", calendar).toString();
+        }
+    }
 }

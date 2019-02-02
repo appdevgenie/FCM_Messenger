@@ -30,6 +30,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import static com.appdevgenie.fcmmessenger.Utils.Constants.DB_REF_TOKEN;
+import static com.appdevgenie.fcmmessenger.Utils.Constants.DB_REF_USERS;
+
 public class LoginActivity extends AppCompatActivity {
 
     public static final int RC_SIGN_IN = 155;
@@ -167,8 +170,10 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseUser.getPhotoUrl() == null ? "" : firebaseUser.getPhotoUrl().toString()
         );
 
-        databaseReference.child("users")
-                .child(user.getUid()).setValue(user);
+        databaseReference
+                .child(DB_REF_USERS)
+                .child(user.getUid())
+                .setValue(user);
 
         /*String token = FirebaseInstanceId.getInstance().getToken();
         if(token != null){
@@ -182,9 +187,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 String token = instanceIdResult.getToken();
-                databaseReference.child("users")
+                databaseReference.child(DB_REF_USERS)
                         .child(firebaseUser.getUid())
-                        .child("token")
+                        .child(DB_REF_TOKEN)
                         .setValue(token);
             }
         });
