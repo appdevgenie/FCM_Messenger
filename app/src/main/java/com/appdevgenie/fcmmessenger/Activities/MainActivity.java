@@ -1,5 +1,6 @@
 package com.appdevgenie.fcmmessenger.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -8,15 +9,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.appdevgenie.fcmmessenger.Adapters.MainListAdapter;
 import com.appdevgenie.fcmmessenger.Models.User;
 import com.appdevgenie.fcmmessenger.R;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,12 +31,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import static com.appdevgenie.fcmmessenger.Utils.Constants.DB_REF_USERS;
+import static com.appdevgenie.fcmmessenger.Utils.Constants.PARSE_UID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Toolbar toolbar;
     private String currentUser;
+    //private FirebaseRecyclerAdapter<User, FirebaseUsersViewHolder> firebaseUsersAdapter;
+    //private FirebaseRecyclerOptions<User> options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +82,43 @@ public class MainActivity extends AppCompatActivity {
 
         currentUser = firebaseAuth.getCurrentUser().getUid();
 
-        //getUserListInfo();
+        getUserListInfo();
     }
 
     private void getUserListInfo() {
 
         //progressBar.setVisibility(View.VISIBLE);
 
-        users.clear();
+        //users.clear();
 
         Query query = databaseReference.child(DB_REF_USERS);
+
+        /*options = new FirebaseRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class)
+                .build();
+
+        firebaseUsersAdapter = new FirebaseRecyclerAdapter<User, FirebaseUsersViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull FirebaseUsersViewHolder holder, int position, @NonNull User model) {
+
+                holder.tvUserName.setText(model.getDisplayName());
+                holder.tvUserEmail.setText(model.getEmail());
+
+                Picasso.with(MainActivity.this)
+                        .load(model.getPhotoUrl())
+                        .placeholder(R.drawable.user_placeholder)
+                        .into(holder.imageView);
+            }
+
+            @NonNull
+            @Override
+            public FirebaseUsersViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.item_main_list, viewGroup, false);
+                return new FirebaseUsersViewHolder(view);
+            }
+        };
+
+        recyclerView.setAdapter(firebaseUsersAdapter);*/
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -120,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
                 if(firebaseUser != null){
-                    getUserListInfo();
+                    //getUserListInfo();
                     //addUserToDB(firebaseUser);
                 }
             }
@@ -193,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         firebaseAuth.addAuthStateListener(authStateListener);
+        //firebaseUsersAdapter.startListening();
     }
 
     @Override
@@ -202,5 +238,32 @@ public class MainActivity extends AppCompatActivity {
         if(authStateListener != null){
             firebaseAuth.removeAuthStateListener(authStateListener);
         }
+        //firebaseUsersAdapter.stopListening();
     }
+
+    /*class FirebaseUsersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private ImageView imageView;
+        private TextView tvUserName;
+        private TextView tvUserEmail;
+
+        FirebaseUsersViewHolder(View itemView) {
+            super(itemView);
+
+            imageView = itemView.findViewById(R.id.ivUserPhoto);
+            tvUserName = itemView.findViewById(R.id.tvUserName);
+            tvUserEmail = itemView.findViewById(R.id.tvUserEmail);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+           // String uid = users.get(getAdapterPosition()).getUid();
+
+            Intent intent = new Intent(MainActivity.this, MessengerActivity.class);
+            //intent.putExtra(PARSE_UID, uid);
+            startActivity(intent);
+        }
+    }*/
 }

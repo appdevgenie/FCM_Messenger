@@ -9,4 +9,6 @@ public class Constants {
     public static final String DB_REF_TIMESTAMP = "timestamp";
 
     public static final String PARSE_UID = "parse_uid";
+
+    public static final int MAX_MESSAGES = 10;
 }

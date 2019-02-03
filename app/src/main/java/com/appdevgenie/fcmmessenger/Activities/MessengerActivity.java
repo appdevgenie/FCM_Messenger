@@ -39,6 +39,7 @@ import static com.appdevgenie.fcmmessenger.Utils.Constants.DB_REF_MESSAGES;
 import static com.appdevgenie.fcmmessenger.Utils.Constants.DB_REF_NEGATED_TIMESTAMP;
 import static com.appdevgenie.fcmmessenger.Utils.Constants.DB_REF_TIMESTAMP;
 import static com.appdevgenie.fcmmessenger.Utils.Constants.DB_REF_USERS;
+import static com.appdevgenie.fcmmessenger.Utils.Constants.MAX_MESSAGES;
 import static com.appdevgenie.fcmmessenger.Utils.Constants.PARSE_UID;
 
 public class MessengerActivity extends AppCompatActivity implements TextWatcher {
@@ -159,7 +160,8 @@ public class MessengerActivity extends AppCompatActivity implements TextWatcher 
                 .child(DB_REF_MESSAGES)
                 //.child(receiverUserId)
                 //.child(senderUserId)
-                .orderByChild(DB_REF_TIMESTAMP);
+                .orderByChild(DB_REF_TIMESTAMP)
+                .limitToLast(MAX_MESSAGES);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
