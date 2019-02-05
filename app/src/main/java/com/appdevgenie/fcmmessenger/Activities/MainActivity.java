@@ -87,9 +87,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void getUserListInfo() {
 
-        //progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
-        //users.clear();
+        users.clear();
 
         Query query = databaseReference.child(DB_REF_USERS);
 
@@ -136,12 +136,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 mainListAdapter.notifyDataSetChanged();
 
-                //progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
 
